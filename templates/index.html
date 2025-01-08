@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IACBOT by Rashid Patel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background */
+            color: #E0E0E0; /* Light text color */
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: #333; /* Dark container background */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #6200ea; /* Dark purple for header */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 2px solid #444;
+        }
+
+        .chat-box {
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            border-bottom: 1px solid #444;
+            scroll-behavior: smooth;
+        }
+
+        .chat-box .user-message, .chat-box .bot-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+
+        .chat-box .user-message {
+            background: #1d72b8; /* User message bubble color (blue) */
+            text-align: right;
+            color: white;
+            max-width: 80%;
+            margin-left: auto;
+        }
+
+        .chat-box .bot-message {
+            background: #6200ea; /* Bot message bubble color (purple) */
+            color: white;
+            max-width: 80%;
+            margin-right: auto;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 15px;
+            background: #121212;
+            gap: 10px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            outline: none;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .input-area button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: #6200ea;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .input-area button:disabled {
+            background: #777;
+            cursor: not-allowed;
+        }
+
+        .input-area button:hover:not(:disabled) {
+            background: #3700b3; /* Darker purple on hover */
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Floating icons */
+        .floating-icons {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .floating-icons .icon {
+            background-color: #25D366; /* WhatsApp green */
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .floating-icons .icon:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-icon {
+            background-color: #25D366; /* WhatsApp green */
+        }
+
+        .sms-icon {
+            background-color: #34b7f1; /* SMS blue color */
+        }
+
+        .floating-icons .icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .floating-icons .icon a {
+            display: block;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">IACBOT BY RASHID PATEL</div>
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="input-area">
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Type your message here..."
+                aria-label="Type your message here"
+            />
+            <button id="send-button" onclick="sendMessage()" aria-label="Send message">Send</button>
+            <button id="mic-button" onclick="startListening()" aria-label="Voice input">🎤</button> <!-- Mic button for voice input -->
+        </div>
+    </div>
+
+    <!-- Floating Icons -->
+    <div class="floating-icons">
+        <!-- WhatsApp Icon -->
+        <div class="icon whatsapp-icon">
+            <a href="https://wa.me/+14155238886" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const micButton = document.getElementById('mic-button');
+
+        function appendMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function toggleButton(state) {
+            sendButton.disabled = !state;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // Append user's message
+            appendMessage(message, 'user');
+            userInput.value = '';
+            toggleButton(false);
+
+            // Show loading indicator
+            appendMessage('Typing...', 'bot');
+            const loadingIndicator = chatBox.querySelector('.bot-message:last-child');
+
+            try {
+                // Send the message to the /chat route (for web)
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message } ),
+                });
+                const data = await response.json();
+
+                // Replace loading indicator with bot's response
+                loadingIndicator.remove();
+                appendMessage(data.response, 'bot');
+
+                // Read bot's response aloud
+                speakResponse(data.response);
+            } catch (error) {
+                loadingIndicator.remove();
+                appendMessage("Something went wrong. Please try again later.", 'bot');
+            } finally {
+                toggleButton(true);
+            }
+        }
+
+        // Function to handle voice input (Speech-to-Text)
+        function startListening() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                userInput.value = speechResult;  // Display speech result in input box
+                sendMessage();  // Send the transcribed text as a message
+            };
+
+            recognition.onerror = (event) => {
+                appendMessage("Sorry, I couldn't understand that. Please try again.", 'bot');
+            };
+        }
+
+        // Function to speak the response (Text-to-Speech)
+        function speakResponse(responseText) {
+            const speech = new SpeechSynthesisUtterance(responseText);
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+        }
+
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>

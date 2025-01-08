@@ -1,0 +1,409 @@
+{
+   "intents":[
+      {
+         "tag":"greeting",
+         "patterns":[
+            "hi",
+            "Hi there",
+            "How are you",
+            "Is anyone there?",
+            "Hey",
+            "Hola",
+            "Hello",
+            "Good day"
+         ],
+         "responses":[
+            "Hello, thanks for asking",
+            "Good to see you again",
+            "Hi there, how can I help?"
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+      {
+         "tag":"thanks",
+         "patterns":[
+            "Thanks",
+            "Thank you",
+            "That's helpful",
+            "Awesome, thanks",
+            "Thanks for helping me"
+         ],
+         "responses":[
+            "Happy to help!",
+            "Any time!",
+            "My pleasure"
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+     {
+         "tag":"ok",
+         "patterns":[
+            "ok",
+            "okay"
+
+         ],
+         "responses":[
+            "Got it, what's next?",
+            "Alright,Let me know for your further queries"
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+     {
+         "tag":"built",
+         "patterns": [
+            "who built you?",
+            "Who are you?"
+
+
+         ],
+         "responses":[
+            "I am an AI or you can say Chatbot of IAC Community,and My owner is Rashid Patel",
+            "I am a virtual assistant Built by Rashid Patel"
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+     {
+         "tag":"Domain",
+         "patterns": [
+            "What types of domains are available in this program?",
+            "What are the different domains have in this programme?"
+
+
+         ],
+         "responses":[
+
+            "there are many domains available in this Programme like Artificial Intelligence(AI),Machine Learning(ML),Data Analytics,Web Development and many more for more information you can just visit the official IAC Community Website "
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+      {
+         "tag":"options",
+         "patterns":[
+            "How you could help me?",
+            "What you can do?",
+            "What help you provide?",
+            "How you can be helpful?",
+            "What support is offered"
+         ],
+         "responses":[
+            "I am a Virtual assistant of IAC-Programme build By Rashid Patel.",
+            "I can give you more information about IAC programme ask me if your any further queries regarding it"
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+     {
+         "tag":"fallback",
+         "patterns": [
+           "tell me a joke",
+           "whats whether today",
+           "xbhsjabcnhsb",
+           "what is AI",
+           "what is ML",
+           "then"
+
+         ],
+         "responses":[
+            "I'm here to assist you with questions related to the IAC internship program. Could you please ask something specific about it? For these kind of question you can just Google it",
+            "It seems your question is not related to the IAC program. Please let me know if you need help with that.",
+            "I can't understand please rewrite the your question in understandable format"
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+     {
+         "tag":"fallback",
+         "patterns": [""],
+         "responses":[
+
+            "It seems your question is not related to the IAC program. Please let me know if you need help with that."
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+
+      {
+         "tag":"What is IAC",
+         "patterns":[
+
+            "What is the IAC program?",
+            "What is IAC internship?"
+
+         ],
+         "responses":[
+            "The IAC Fellows Program is an immersive initiative designed to empower the next generation of leaders, creators, innovators, and disruptors by providing comprehensive support, including financial assistance, mentorship, and real-world project experience.",
+            "It is the fantastic internship programme that offers various opportunities to work with in different Domain"
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+       {
+         "tag":"eligible-IAC",
+         "patterns":[
+
+            "Who is eligible to apply for the IAC Fellows Program?",
+            "what is eligibility for this programme?"
+
+         ],
+         "responses":[
+            "Applicants must have a demonstrable need for financial assistance, be U.S. citizens or permanent residents, range from rising college freshmen to first-year PhD students enrolled at an accredited college or university, and be able to attend in-person programming in NYC."
+
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+      {
+   "tag": "duration-IAC",
+   "patterns": [
+      "What is the duration of the IAC Fellows Program?"
+   ],
+   "responses": [
+      "The program's duration is not specified in the provided sources. For detailed information, please refer to the official IAC Fellows website or contact their support team.",
+      "The programme duration is based on which type of course you take. For more information, just visit our IAC community (https://www.industryacademiacommunity.com/)."
+   ],
+   "context": [""]
+},
+
+
+       {
+         "tag":"paid or unpaid-IAC",
+         "patterns":[
+
+            "Is the IAC Fellows Program paid or unpaid?",
+            "It is paid or unpaid?"
+
+         ],
+         "responses":[
+            "The program offers comprehensive support to alleviate financial hardship, though specific details about stipends or salaries are not provided in the available sources.",
+            "The online internship is totally unpaid but some of the offline courses are paid"
+
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+
+       {
+         "tag":"apply-IAC",
+         "patterns":[
+
+            "How can I apply for the IAC Fellows Program?",
+            "How to apply in the IAC internship?"
+
+         ],
+         "responses":[
+            "Interested candidates can apply through the official IAC Fellows website by following the application guidelines provided."
+
+
+         ],
+         "context":[
+            ""
+         ]
+      },
+     {
+       "tag": "deadline-IAC",
+       "patterns": [
+         "What is the application deadline for the IAC Fellows Program?"
+       ],
+       "responses": [
+         "The application portal for the 2025 IAC Fellows Program closes on January 5th."
+       ],
+       "context": [
+         ""
+       ]
+     },
+     {
+       "tag": "will receive certificate",
+       "patterns": [
+         "Will I receive a certificate upon completion of the IAC Fellows Program?",
+         "I will get a certificate after completing this internship?"
+       ],
+       "responses": [
+         "The available sources do not specify whether a certificate is awarded upon completion. For detailed information, please refer to the official IAC Fellows website or contact their support team.",
+         "If your Live project is valid or sufficient according to the instruction provided by IAC you will definitely receive certificate,otherwise you can't receive certificate or Experiance Letter"
+       ],
+       "context": [
+         ""
+       ]
+     },
+     {
+       "tag": "role-IAC",
+       "patterns": [
+         "Are there opportunities for a full-time role after completing the IAC Fellows Program?"
+
+       ],
+       "responses": [
+         "The program aims to prepare Fellows for future internships and workplaces, though specific details about direct transitions to full-time roles are not provided in the available sources."
+       ],
+       "context": [
+         ""
+       ]
+     },
+     {
+       "tag": "project",
+       "patterns": [
+         "What kind of projects will I work on during the IAC Fellows Program?",
+         "what different project interact with in this Programme?"
+       ],
+       "responses": [
+         "IAC programme engage in real-world projects designed to develop skills required to succeed in future workplaces, though specific project details are not provided in the available sources."
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+      {
+       "tag": "more-FAQ",
+       "patterns": [
+         "Who can I contact for more information about the IAC Fellows Program?"
+
+       ],
+       "responses": [
+         "For more information, you can email the IAC Fellows team at support@iac.com"
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "can't get certificate",
+       "patterns": [
+         "I completed my project but still can't receive a certificate?",
+         "I already submitted my project but could not get a certificate yet?"
+
+       ],
+       "responses": [
+         "If you have successfully completed your project and submitted it, but still have not received the certificate, then your project might be deemed irrelevant. You will receive emails regarding this from IAC."
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "mentorship",
+       "patterns": [
+         "Will there be mentorship during the IAC Fellows Program?",
+         "Is there will be provided mentorship or guidance?"
+
+       ],
+       "responses": [
+         "Yes, the program is designed to engage the full person, including providing mentorship to help Fellows develop necessary skills for future success.",
+         "off curse yes, Expert mentors like Harshada Topale engage intern with multiple weekly meeting and all"
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "participation",
+       "patterns": [
+         "How many students have participated in the IAC Fellows Program since its inception?"
+
+       ],
+       "responses": [
+         "Since 2019, over 70,000 students have participated in the IAC Fellows Program, representing over 138 colleges and universities nationwide."
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "genuine",
+       "patterns": [
+         "Is this internship genuine?"
+
+       ],
+       "responses": [
+         "Ohh yes, this is absolutely genuine. For more information, you can visit the official IAC community website."
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "start",
+       "patterns": [
+         "How to start the IAC internship?"
+
+       ],
+       "responses": [
+         "First, go to the official website of the IAC community and click on 'Internship' to log in. Once you log in, fill in all the necessary details, click on 'GET FREE COURSE,' complete all the workshop and training, then select your domain, and finally complete your project in the selected domain and submit it."
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "complete-project",
+       "patterns": [
+         "How to complete Live Project?"
+
+       ],
+       "responses": [
+         "First Carefully understand the problem statement of the selected domain and build your project according to the provided instructions"
+       ],
+       "context": [
+         ""
+       ]
+     },
+
+     {
+       "tag": "why-apply",
+       "patterns": [
+         "Why should I apply for this internship program?"
+
+       ],
+       "responses": [
+         "This program is unpaid, easy to access, and provides guidance and support from the community, along with a certificate or experience letter upon completion."
+       ],
+       "context": [
+         ""
+       ]
+     }
+
+
+
+
+
+
+
+   ]
+}
