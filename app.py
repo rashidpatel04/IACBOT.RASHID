@@ -10,11 +10,13 @@ import openai
 import pyttsx3  # Importing pyttsx3 for text-to-speech
 import speech_recognition as sr  # For speech-to-text conversion
 from twilio.rest import Client
+import tensorflow as tf
 
 import os
 from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from the .env file
+tf.config.set_visible_devices([], 'GPU')
 
 # Replace hard-coded keys with environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
