@@ -3,8 +3,8 @@
 # Update package list
 apt-get update
 
-# Install espeak
-apt-get install -y espeak
+# Install both espeak and espeak-ng
+apt-get install -y espeak espeak-ng
 
 # Clean up to reduce image size
 apt-get clean
