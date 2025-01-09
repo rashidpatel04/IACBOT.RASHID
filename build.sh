@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Update package list
-sudo apt-get update
+apt-get update
 
 # Install espeak
-sudo apt-get install -y espeak
+apt-get install -y espeak
 
 # Clean up to reduce image size
-sudo apt-get clean
-sudo rm -rf /var/lib/apt/lists/*
+apt-get clean
+rm -rf /var/lib/apt/lists/*
