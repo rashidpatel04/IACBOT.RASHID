@@ -14,6 +14,26 @@ import os
 import tempfile
 from dotenv import load_dotenv
 
+# Set NLTK data path
+nltk_data_dir = os.path.join(os.getcwd(), 'nltk_data')
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir)
+nltk.data.path.append(nltk_data_dir)
+
+# Download required NLTK data
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt', download_dir=nltk_data_dir)
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet', download_dir=nltk_data_dir)
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    nltk.download('punkt_tab', download_dir=nltk_data_dir)
+
 load_dotenv()  # Load environment variables from the .env file
 
 # Replace hard-coded keys with environment variables
@@ -24,10 +44,6 @@ TWILIO_WHATSAPP_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
 
 # Initialize Flask app
 app = Flask(__name__)
-
-# Download necessary NLTK resources
-nltk.download('punkt')
-nltk.download('wordnet')
 
 # Load chatbot resources
 lemmatizer = WordNetLemmatizer()
@@ -119,7 +135,6 @@ def voice_input():
         # Generate audio file
         audio_file = speak_response(response)
         if audio_file:
-            # Return both text response and path to audio file
             return jsonify({'response': response, 'audio_file': audio_file}), 200
         else:
             return jsonify({'response': response}), 200
@@ -141,8 +156,10 @@ def chat():
 
         return jsonify({'response': response}), 200
     except Exception as e:
-        print(f"Error in web chat: {e}")
-        return jsonify({'response': 'Something went wrong'}), 500
+        print(f"Detailed error in web chat: {str(e)}")
+        import traceback
+        print(traceback.format_exc())
+        return jsonify({'response': f'Error: {str(e)}'}), 500
 
 # Route for WhatsApp integration via Twilio
 @app.route("/webhook", methods=['POST'])
