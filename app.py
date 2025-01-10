@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 from nltk.stem import WordNetLemmatizer
 import nltk
 import openai
-import speech_recognition as sr  # For speech-to-text conversion
+import speech_recognition as sr
 from twilio.rest import Client
 from gtts import gTTS
 import os
@@ -20,15 +20,16 @@ if not os.path.exists(nltk_data_dir):
     os.makedirs(nltk_data_dir)
 nltk.data.path.append(nltk_data_dir)
 
-# Download required NLTK data
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt', download_dir=nltk_data_dir)
-try:
-    nltk.data.find('corpora/wordnet')
-except LookupError:
-    nltk.download('wordnet', download_dir=nltk_data_dir)
+# Read the nltk.txt file to get the list of resources
+with open('nltk.txt', 'r') as file:
+    resources = file.read().splitlines()
+
+# Download resources from the list
+for resource in resources:
+    try:
+        nltk.data.find(f'tokenizers/{resource}')
+    except LookupError:
+        nltk.download(resource, download_dir=nltk_data_dir)
 
 load_dotenv()  # Load environment variables from the .env file
 
