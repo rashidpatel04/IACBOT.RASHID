@@ -7,23 +7,20 @@ from tensorflow.keras.models import load_model
 from nltk.stem import WordNetLemmatizer
 import nltk
 import openai
-import pyttsx3  # Importing pyttsx3 for text-to-speech
 import speech_recognition as sr  # For speech-to-text conversion
 from twilio.rest import Client
-import tensorflow as tf
-
+from gtts import gTTS
 import os
+import tempfile
 from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from the .env file
-tf.config.set_visible_devices([], 'GPU')
 
 # Replace hard-coded keys with environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
 TWILIO_WHATSAPP_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")
-
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -38,15 +35,6 @@ model = load_model('chatbot_model.h5')
 intents = json.load(open('intents.json'))
 words = pickle.load(open('words.pkl', 'rb'))
 classes = pickle.load(open('classes.pkl', 'rb'))
-
-# OpenAI API key
-# Replace with your OpenAI API key
-
-# Initialize text-to-speech engine
-engine = pyttsx3.init()
-
-# Twilio configuration
-
 
 # Initialize Twilio client
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
@@ -98,10 +86,17 @@ def get_response(intent_list, intents_json, user_input=None):
     # Custom fallback response
     return "I'm sorry, I didn't understand that. Can you please rephrase?" if user_input else get_openai_response(user_input)
 
-# Function to speak the response
+# Function to speak the response using gTTS
 def speak_response(response):
-    engine.say(response)
-    engine.runAndWait()
+    try:
+        tts = gTTS(text=response, lang='en')
+        # Create a temporary file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.mp3')
+        tts.save(temp_file.name)
+        return temp_file.name
+    except Exception as e:
+        print(f"Error in text-to-speech: {e}")
+        return None
 
 # Route for handling voice input (Speech-to-Text)
 @app.route('/voice', methods=['GET'])
@@ -118,14 +113,16 @@ def voice_input():
         user_input = recognizer.recognize_google(audio)
         print(f"Recognized text: {user_input}")
 
-        # Process the recognized text and generate a response
         intents_list = predict_class(user_input)
         response = get_response(intents_list, intents, user_input=user_input)
 
-        # Speak the response
-        speak_response(response)
-
-        return jsonify({'response': response}), 200
+        # Generate audio file
+        audio_file = speak_response(response)
+        if audio_file:
+            # Return both text response and path to audio file
+            return jsonify({'response': response, 'audio_file': audio_file}), 200
+        else:
+            return jsonify({'response': response}), 200
 
     except sr.UnknownValueError:
         return jsonify({'response': "Sorry, I could not understand the audio."}), 500
